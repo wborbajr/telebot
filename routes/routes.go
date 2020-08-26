@@ -11,7 +11,7 @@ import (
 //StartGin function
 func StartGin() {
 	router := gin.Default()
-	api := router.Group("/api")
+	api := router.Group("/api/v1")
 	{
 		api.GET("/users", user.GetAllUser)
 		api.POST("/users", user.CreateUser)
