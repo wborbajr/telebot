@@ -1,0 +1,31 @@
+GET http://127.0.0.1:3030/api/v1/users
+
+### 
+
+POST http://127.0.0.1:3030/api/v1/users HTTP/1.1
+content-type: application/json
+
+{
+    "name":"sonic",
+	"address":"so@nic.ds",
+	"age":3
+}
+
+###
+
+GET http://127.0.0.1:3030/api/v1/users/5f46b9ab947a2642b33389ca
+
+###
+
+PUT http://127.0.0.1:3030/api/v1/users/5f46b94d947a2642b33389c9
+content-type: application/json
+
+{
+    "name":"bala",
+	"address":"bala@gmail.com",
+	"age":31
+}
+
+###
+
+DELETE http://127.0.0.1:3030/api/v1/users/5f46ba5b947a2642b33389cb
