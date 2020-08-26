@@ -21,9 +21,9 @@ func StartGin() {
 	api := router.Group("/api/v1")
 	{
 		api.GET("/users", user.GetAllUser)
-		api.POST("/users", user.CreateUser)
 		api.GET("/users/:id", user.GetUser)
 		api.PUT("/users/:id", user.UpdateUser)
+		api.POST("/users", user.CreateUser)
 		api.DELETE("/users/:id", user.DeleteUser)
 	}
 	
