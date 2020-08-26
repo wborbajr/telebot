@@ -27,12 +27,13 @@ services:
     links:
       - database
     ports:
-      - 3030:1406
+      - ${APP_PORT}:${APP_PORT}
     environment:
       MONGO_HOST: ${MONGO_HOST}
       MONGO_DB_NAME: ${MONGO_DB_NAME}
       TELEGRAM_TOKEN: ${TELEGRAM_TOKEN}
       GIN_MODE: ${GIN_MODE}
+      APP_PORT: ${APP_PORT}
 
   mongoclient:
     image: mongoclient/mongoclient

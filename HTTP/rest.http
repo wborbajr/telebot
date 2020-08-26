@@ -1,8 +1,8 @@
-GET http://127.0.0.1:3030/api/v1/users
+GET http://127.0.0.1:1406/api/v1/users
 
 ### 
 
-POST http://127.0.0.1:3030/api/v1/users HTTP/1.1
+POST http://127.0.0.1:1406/api/v1/users HTTP/1.1
 content-type: application/json
 
 {
@@ -13,11 +13,11 @@ content-type: application/json
 
 ###
 
-GET http://127.0.0.1:3030/api/v1/users/5f46b9ab947a2642b33389ca
+GET http://127.0.0.1:1406/api/v1/users/5f46b9ab947a2642b33389ca
 
 ###
 
-PUT http://127.0.0.1:3030/api/v1/users/5f46b94d947a2642b33389c9
+PUT http://127.0.0.1:1406/api/v1/users/5f46b94d947a2642b33389c9
 content-type: application/json
 
 {
@@ -28,4 +28,4 @@ content-type: application/json
 
 ###
 
-DELETE http://127.0.0.1:3030/api/v1/users/5f46ba5b947a2642b33389cb
+DELETE http://127.0.0.1:1406/api/v1/users/5f46ba5b947a2642b33389cb
