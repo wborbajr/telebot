@@ -23,7 +23,7 @@ RUN mkdir -p ${LOG_DIR}
 ENV LOG_FILE_LOCATION=${LOG_DIR}/app.log 
 
 # Copy go mod and sum files
-COPY go.mod go.sum /telebot/
+COPY go.mod go.sum ./
 
 # Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
@@ -52,9 +52,10 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /telebot
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=builder /telebot/telebotserver .
+COPY --from=builder /telebot/telebotserver ./
 
 # Expose port 1406 to the outside world
+ENV PORT=1406
 EXPOSE 1406
 
 # Command to run the executable

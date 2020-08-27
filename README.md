@@ -28,17 +28,21 @@ golang  latest 839MB
 ### Build
 
 ```bash
+docker-compose build --no-cache --pull
+or
 docker-compose up -d --build --no-cache --pull
 ```
 
 ### Run
 
 ```bash
+docker-compose up  && docker-compose down
+or
 docker-compose up -d
 docker-compose down
 ```
 
-### Cleanup <nome> images
+### Cleanup <none> images
 
 ```bash
 docker rmi $(docker images -f "dangling=true" -q) --force
