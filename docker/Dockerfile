@@ -34,7 +34,13 @@ COPY . .
 # Build the Go app
 # RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o telebotserver .
 ARG version=dev
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags "-X main.version=$version" -o telebotserver -v .
+RUN CGO_ENABLED=0 GOOS=linux \
+    go build --ldflags "-s -w -X main.version=$version" -a -installsuffix cgo \
+    -v -o telebotserver .
+
+# RUN CGO_ENABLED=0 GOOS=linux \
+#     go build --ldflags "-s -w" -a -installsuffix cgo -o handler . && \
+#     go test $(go list ./... | grep -v /vendor/) -cover
 
 # Declare volumes to mount
 VOLUME [${LOG_DIR}]
@@ -46,17 +52,26 @@ FROM alpine:latest
 # FROM scratch
 # FROM debian:buster
 
-# Just for alpine image
-RUN apk --no-cache add ca-certificates
+# Add non root user and certs
+RUN apk --no-cache add ca-certificates \
+    && addgroup -S app && adduser -S -g app app \
+    && mkdir -p /telebot \
+    && chown app /telebot
 
 WORKDIR /telebot
 
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /telebot/telebotserver ./
 
+RUN chown -R app /telebot
+
+RUN touch /tmp/.lock #  Write a health check for OpenFaaS here or in the HTTP server start-up
+
 # Expose port 1406 to the outside world
 ENV PORT=1406
 EXPOSE 1406
+
+USER app
 
 # Command to run the executable
 CMD ["./telebotserver"] 
