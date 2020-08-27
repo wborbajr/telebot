@@ -1,3 +1,5 @@
+![Docker](https://github.com/wborbajr/telebot/blob/master/img/telebot.jpeg)
+
 # telebot
 
 Telegram BOT using GOLang
