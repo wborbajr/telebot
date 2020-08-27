@@ -1,4 +1,4 @@
-![Docker](https://github.com/wborbajr/telebot/blob/master/img/telebot.jpeg)
+![Docker](https://github.com/wborbajr/telebot/blob/master/img/telebot.jpg)
 
 # telebot
 
