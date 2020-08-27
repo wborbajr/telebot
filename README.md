@@ -52,7 +52,6 @@ docker rmi $(docker images -f "dangling=true" -q) --force
 
 ## References
 
-```link
 https://sohlich.github.io/post/go_makefile/
 https://medium.com/@thedevsaddam/build-restful-api-service-in-golang-using-gin-gonic-framework-85b1a6e176f3
 https://medium.com/tech-at-wildlife-studios/write-backend-systems-50aae8db849e
@@ -62,5 +61,3 @@ https://blog.alexellis.io/introducing-functions-as-a-service/
 
 https://madeddu.xyz/posts/goa-docker-multistage/
 https://codeburst.io/using-rabbitmq-for-microservices-communication-on-docker-a43840401819
-
-```
