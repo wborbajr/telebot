@@ -16,6 +16,7 @@ services:
     command: mongod --logpath=/dev/null
 
   telebot:
+    image: telebot:latest
     build:
       context: .
       dockerfile: ./docker/Dockerfile

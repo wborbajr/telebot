@@ -38,6 +38,12 @@ docker-compose up -d
 docker-compose down
 ```
 
+### Cleanup <nome> images
+
+```bash
+docker rmi $(docker images -f "dangling=true" -q) --force
+```
+
 ## References
 
 ```link
@@ -45,4 +51,5 @@ https://sohlich.github.io/post/go_makefile/
 https://medium.com/@thedevsaddam/build-restful-api-service-in-golang-using-gin-gonic-framework-85b1a6e176f3
 https://medium.com/tech-at-wildlife-studios/write-backend-systems-50aae8db849e
 https://ewanvalentine.io/
+https://sosedoff.com/2019/02/12/go-github-actions.html
 ```
