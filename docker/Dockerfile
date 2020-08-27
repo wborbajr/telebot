@@ -4,6 +4,7 @@ FROM golang:alpine as builder
 # Add Maintainer Info
 LABEL maintainer="Waldir Borba Junior <wborbajr@gmail.com>"
 
+# Enable only if FROM golang:alpine
 RUN apk update && apk upgrade && \
     apk add --no-cache git
 
@@ -31,8 +32,9 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o telebotserver .
-# RUN CGO_ENABLED=0 GOOS=windows GOOS=linux GOARCH=amd64 go build
+# RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o telebotserver .
+ARG version=dev
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags "-X main.version=$version" -o telebotserver -v .
 
 # Declare volumes to mount
 VOLUME [${LOG_DIR}]
@@ -42,7 +44,9 @@ VOLUME [${LOG_DIR}]
 ##############
 FROM alpine:latest  
 # FROM scratch
+# FROM debian:buster
 
+# Just for alpine image
 RUN apk --no-cache add ca-certificates
 
 WORKDIR /telebot
