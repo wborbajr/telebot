@@ -56,4 +56,9 @@ https://medium.com/@thedevsaddam/build-restful-api-service-in-golang-using-gin-g
 https://medium.com/tech-at-wildlife-studios/write-backend-systems-50aae8db849e
 https://ewanvalentine.io/
 https://sosedoff.com/2019/02/12/go-github-actions.html
+https://blog.alexellis.io/introducing-functions-as-a-service/
+
+https://madeddu.xyz/posts/goa-docker-multistage/
+https://codeburst.io/using-rabbitmq-for-microservices-communication-on-docker-a43840401819
+
 ```
