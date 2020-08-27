@@ -31,7 +31,8 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o telebotserver .
+# RUN CGO_ENABLED=0 GOOS=windows GOOS=linux GOARCH=amd64 go build
 
 # Declare volumes to mount
 VOLUME [${LOG_DIR}]
@@ -40,16 +41,17 @@ VOLUME [${LOG_DIR}]
 ######## Start a new stage from scratch #######
 ##############
 FROM alpine:latest  
+# FROM scratch
 
 RUN apk --no-cache add ca-certificates
 
 WORKDIR /telebot
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=builder /telebot/main .
+COPY --from=builder /telebot/telebotserver .
 
 # Expose port 1406 to the outside world
 EXPOSE 1406
 
 # Command to run the executable
-CMD ["./main"] 
+CMD ["./telebotserver"] 

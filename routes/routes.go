@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"strconv"
 	"os"
 	"log"
 	"net/http"
@@ -12,9 +13,9 @@ import (
 //StartGin function
 func StartGin() {
 
-	PORT := os.Getenv("APP_PORT")
-    if PORT == "" {
-        PORT = "3030"
+	PORT, err := strconv.Atoi(os.Getenv("APP_PORT"))
+    if err != nil {
+        PORT = 3030
     }
 
 	router := gin.Default()
@@ -31,5 +32,5 @@ func StartGin() {
 		c.AbortWithStatus(http.StatusNotFound)
 	})
 
-	log.Fatal(router.Run(":"+PORT))
+	log.Fatal(router.Run(":"+strconv.Itoa(PORT)))
 }

@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println("TeleBOT v1.0.0")
+	fmt.Println("TeleBOTServer v1.0.0")
 	routes.StartGin()
 }
