@@ -1,0 +1,10 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Building image and bringing up
+        run: docker-compose -f docker-compose.yaml up -d
