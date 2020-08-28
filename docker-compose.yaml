@@ -1,10 +1,40 @@
 version: '3'
 
 services:
+  telebot:
+    image: telebot:latest
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: ct_TB_app
+    hostname: telebot
+    restart: always
+    # links:
+    #   - database
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    command: sh -c "/wait && /telebot/telebotserver"
+    environment:
+      MONGO_HOST: database #${MONGO_HOST}
+      MONGO_DB_NAME: ${MONGO_DB_NAME}
+      TELEGRAM_TOKEN: ${TELEGRAM_TOKEN}
+      GIN_MODE: ${GIN_MODE}
+      APP_PORT: ${APP_PORT}
+      # WAIT_HOSTS: postgres:5432, mysql:3306, mongo:27017
+      WAIT_HOSTS: database:27017, redis:6379
+      WAIT_HOSTS_TIMEOUT: 300
+      WAIT_SLEEP_INTERVAL: 30
+      WAIT_HOST_CONNECT_TIMEOUT: 30
+
+    depends_on:
+      - database
+      - mongoclient
+      - redis
+
   database:
     image: mongo:latest
-    container_name: ct_telebot_db
-    hostname: telebot-db
+    container_name: ct_TB_mongodb
+    hostname: mongo
     restart: always
     environment:
       - MONGO_DATA_DIR=/data/db
@@ -13,36 +43,26 @@ services:
       - ./data/db:/data/db # ensures data persistence between restarting
     ports:
       - 17027:27017
+      # - 27017:27017
+      # - 27018:27018
+      # - 27019:27019
     command: mongod --logpath=/dev/null
 
-  telebot:
-    image: telebot:latest
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile
-    container_name: ct_telebot_app
-    hostname: telebot-app
-    restart: always
-    depends_on:
-      - database
-    links:
-      - database
+  redis:
+    image: redis:alpine
+    container_name: ct_TB_redis
+    hostname: redis
     ports:
-      - ${APP_PORT}:${APP_PORT}
-    environment:
-      MONGO_HOST: database #${MONGO_HOST}
-      MONGO_DB_NAME: ${MONGO_DB_NAME}
-      TELEGRAM_TOKEN: ${TELEGRAM_TOKEN}
-      GIN_MODE: ${GIN_MODE}
-      APP_PORT: ${APP_PORT}
+      - 7963:6379
 
   mongoclient:
     image: mongoclient/mongoclient
-    container_name: ct_mongoclient
+    container_name: ct_TB_mongoclient
+    hostname: mongoclient
     restart: unless-stopped
     depends_on:
       - database
     ports:
       - 2020:3000
-    links:
-      - database
+    # links:
+    #   - database

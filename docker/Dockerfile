@@ -67,6 +67,10 @@ RUN chown -R app /telebot
 
 RUN touch /tmp/.lock #  Write a health check for OpenFaaS here or in the HTTP server start-up
 
+# Add docker-compose-wait tool -------------------
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+RUN chmod +x /wait
+
 # Expose port 1406 to the outside world
 ENV PORT=1406
 EXPOSE 1406
@@ -74,4 +78,4 @@ EXPOSE 1406
 USER app
 
 # Command to run the executable
-CMD ["./telebotserver"] 
+CMD ["./telebotserver"]
