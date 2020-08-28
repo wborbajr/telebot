@@ -5,7 +5,7 @@ services:
     image: telebot:latest
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/Dockerfile.distroless
     container_name: ct_TB_app
     hostname: telebot
     restart: always
