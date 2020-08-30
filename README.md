@@ -1,4 +1,4 @@
-![TeleBot](.docs/images/telebot.jpg)
+![TeleBot](./docs/images/telebot.jpg)
 
 # telebot
 
