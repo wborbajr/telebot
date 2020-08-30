@@ -41,7 +41,7 @@ services:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     volumes:
-      - ./data/db:/data/db # ensures data persistence between restarting
+      - ./infra/mongo/data/db:/data/db:rw
     ports:
       - 17027:27017
       # - 27017:27017
