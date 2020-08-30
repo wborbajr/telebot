@@ -1,26 +1,13 @@
 # Start from the latest golang base image
-FROM golang:alpine as builder
+FROM golang:latest as builder
 
 # Add Maintainer Info
 LABEL maintainer="Waldir Borba Junior <wborbajr@gmail.com>"
 
-# Enable only if FROM golang:alpine
-RUN apk update && apk upgrade && \
-    apk add --no-cache git
-
-ENV GO111MODULE=on
+# ENV GO111MODULE=on
 
 # Set the Current Working Directory inside the container
 WORKDIR /telebot
-
-# Build Args
-ARG LOG_DIR=/telebot/logs
-
-# Create Log Directory
-RUN mkdir -p ${LOG_DIR}
-
-# Environment Variables
-ENV LOG_FILE_LOCATION=${LOG_DIR}/app.log 
 
 # Copy go mod and sum files
 COPY go.mod go.sum ./
@@ -33,49 +20,32 @@ COPY . .
 
 # Build the Go app
 # RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o telebotserver .
-ARG version=dev
 RUN CGO_ENABLED=0 GOOS=linux \
-    go build --ldflags "-s -w -X main.version=$version" -a -installsuffix cgo \
+    go build --ldflags "-s -w" -a -installsuffix cgo \
     -v -o telebotserver .
-
-# RUN CGO_ENABLED=0 GOOS=linux \
-#     go build --ldflags "-s -w" -a -installsuffix cgo -o handler . && \
-#     go test $(go list ./... | grep -v /vendor/) -cover
-
-# Declare volumes to mount
-VOLUME [${LOG_DIR}]
+#      && go test $(go list ./... | grep -v /vendor/) -cover
 
 ########
 ######## Start a new stage from scratch #######
 ##############
-FROM alpine:latest  
-# FROM scratch
-# FROM debian:buster
+ FROM alpine:latest  
 
 # Add non root user and certs
-RUN apk --no-cache add ca-certificates \
-    && addgroup -S app && adduser -S -g app app \
-    && mkdir -p /telebot \
-    && chown app /telebot
+RUN apk --no-cache add ca-certificates  
 
 WORKDIR /telebot
 
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /telebot/telebotserver ./
 
-RUN chown -R app /telebot
-
-RUN touch /tmp/.lock #  Write a health check for OpenFaaS here or in the HTTP server start-up
-
 # Add docker-compose-wait tool -------------------
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+
 RUN chmod +x /wait
 
 # Expose port 1406 to the outside world
 ENV PORT=1406
 EXPOSE 1406
-
-USER app
 
 # Command to run the executable
 CMD ["./telebotserver"]

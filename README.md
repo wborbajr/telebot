@@ -1,4 +1,4 @@
-![Docker](https://github.com/wborbajr/telebot/blob/master/img/telebot.jpg)
+![TeleBot](.docs/images/telebot.jpg)
 
 # telebot
 
@@ -11,6 +11,12 @@ source .env && go run main.go
 ```
 
 ## Generating Security Certs
+
+If you need, you may generate a self signed certficate, as this requires HTTPS / TLS. The above example tells Telegram that this is your certificate and that it should be trusted, even though it is not properly signed.
+
+```bash
+openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 3560 -subj "//O=Org\CN=Test" -nodes
+```
 
 ```bash
 openssl genrsa -out server.key

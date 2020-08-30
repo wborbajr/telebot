@@ -2,6 +2,7 @@ telegram/
 data/
 workflows/
 .env
+src/
 
 
 # Binaries for programs and plugins
