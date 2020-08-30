@@ -73,3 +73,9 @@ https://blog.alexellis.io/introducing-functions-as-a-service/
 https://madeddu.xyz/posts/goa-docker-multistage/
 
 https://codeburst.io/using-rabbitmq-for-microservices-communication-on-docker-a43840401819
+
+https://www.linode.com/docs/applications/containers/deploying-microservices-with-docker/
+
+https://www.linode.com/docs/applications/containers/how-to-create-a-docker-swarm-manager-and-nodes-on-linode/
+
+https://www.linode.com/docs/applications/containers/docker-container-communication/

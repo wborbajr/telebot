@@ -42,7 +42,7 @@ services:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     volumes:
-      - ./infra/mongo/db:/data/db:rw
+      - $PWD/infra/mongo/db:/data/db:rw
     ports:
       - 17027:27017
       # - 27017:27017
@@ -64,8 +64,8 @@ services:
     ports:
       - 3254:5432
     volumes:
-      - ./infra/pgsql/dbdata:/var/lib/postgresql/data:rw
-      - ./infra/pgsql/pglog:/var/log/postgresql:rw
+      - $PWD/infra/pgsql/dbdata:/var/lib/postgresql/data:rw
+      - $PWD/infra/pgsql/pglog:/var/log/postgresql:rw
       # - pgconf:/etc/postgresql
       # - data:/var/lib/postgresql/data
 
@@ -73,8 +73,12 @@ services:
     image: redis:alpine
     container_name: ct_TB_redis
     hostname: redis
+    restart: always
+    # command: redis-server --requirepass sOmE_sEcUrE_pAsS
     ports:
       - 7963:6379
+    volumes:
+      - $PWD/infra/redis/data:/data:rw
 
   mongoclient:
     image: mongoclient/mongoclient
@@ -99,7 +103,7 @@ services:
     ports:
       - '9090:80'
     volumes:
-      - ./infra/pgadmin/pgadmin:/var/lib/pgadmin:rw
+      - $PWD/infra/pgadmin/pgadmin:/var/lib/pgadmin:rw
     depends_on:
       - postgres
     links:
