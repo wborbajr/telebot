@@ -1,5 +1,5 @@
 # ignore .git and .cache folders
-.git
+# .git
 .cache
 # ignore all *.class files in all folders, including build root
 **/*.class
@@ -12,3 +12,15 @@ Dockerfile
 docker-compose.yaml
 .github
 .env_SAMPLE
+###
+**/node_modules/
+**/.git
+**/README.md
+**/LICENSE
+**/.vscode
+**/npm-debug.log
+**/coverage
+**/.env
+**/.editorconfig
+**/.aws
+**/dist

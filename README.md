@@ -83,3 +83,13 @@ https://www.linode.com/docs/applications/containers/docker-container-communicati
 https://www.freecodecamp.org/news/build-a-blockchain-in-golang-from-scratch/
 
 https://medium.com/@mycoralhealth/code-your-own-blockchain-in-less-than-200-lines-of-go-e296282bcffc
+
+### Best Practice
+
+https://www.reddit.com/r/golang/comments/fah0v8/best_practice_to_dockerize_golang_113/
+
+https://blog.berkgokden.com/continuous-integration-practices-with-docker-part-2-3573da77a9d8
+
+https://dev.to/nodepractices/docker-best-practices-with-node-js-4ln4
+
+https://github.com/goldbergyoni/nodebestpractices
