@@ -79,3 +79,7 @@ https://www.linode.com/docs/applications/containers/deploying-microservices-with
 https://www.linode.com/docs/applications/containers/how-to-create-a-docker-swarm-manager-and-nodes-on-linode/
 
 https://www.linode.com/docs/applications/containers/docker-container-communication/
+
+https://www.freecodecamp.org/news/build-a-blockchain-in-golang-from-scratch/
+
+https://medium.com/@mycoralhealth/code-your-own-blockchain-in-less-than-200-lines-of-go-e296282bcffc
