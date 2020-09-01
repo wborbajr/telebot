@@ -13,8 +13,7 @@ services:
     #   - mongodb
     ports:
       - 6014:1406
-    # command: sh -c "./telebot/wait && ./telebot/telebotserver"
-    # command: './telebot/wait && ./telebot/telebotserver'
+    command: sh -c "./telebot/wait && ./telebot/telebotserver"
     environment:
       MONGO_HOST: mongodb #${MONGO_HOST}
       MONGO_DB_NAME: telebot

@@ -6,6 +6,11 @@ LABEL maintainer="Waldir Borba Junior <wborbajr@gmail.com>"
 
 # ENV GO111MODULE=on
 
+# Add docker-compose-wait tool -------------------
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+
+RUN chmod +x /wait
+
 # Set the Current Working Directory inside the container
 WORKDIR /telebot
 
@@ -37,11 +42,7 @@ WORKDIR /telebot
 
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /telebot/telebotserver ./
-
-# Add docker-compose-wait tool -------------------
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
-
-RUN chmod +x /wait
+COPY --from=builder /wait /wait
 
 # Expose port 1406 to the outside world
 ENV PORT=1406
