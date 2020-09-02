@@ -2,7 +2,7 @@ telegram/
 infra/
 workflows/
 .env
-src/
+**/src/telegram/
 
 
 # Binaries for programs and plugins

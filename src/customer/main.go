@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	routes "github.com/wborbajr/telebot/routes"
+	routes "github.com/wborbajr/telebot/src/customer/routes"
 )
 
 func main() {

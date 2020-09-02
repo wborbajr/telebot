@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/wborbajr/telebot/conn"
+	"github.com/wborbajr/telebot/src/customer/conn"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"

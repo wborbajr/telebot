@@ -24,3 +24,5 @@ docker-compose.yaml
 **/.editorconfig
 **/.aws
 **/dist
+##
+**/src/telegram/

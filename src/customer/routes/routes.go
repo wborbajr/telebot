@@ -5,7 +5,7 @@ import (
 	"os"
 	"log"
 	"net/http"
-	user "github.com/wborbajr/telebot/controllers/user"
+	user "github.com/wborbajr/telebot/src/customer/controllers/user"
 
 	"github.com/gin-gonic/gin"
 )

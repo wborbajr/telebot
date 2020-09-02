@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/wborbajr/telebot/conn"
-	user "github.com/wborbajr/telebot/models/user"
+	"github.com/wborbajr/telebot/src/customer/conn"
+	user "github.com/wborbajr/telebot/src/customer/models/user"
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/mgo.v2/bson"
