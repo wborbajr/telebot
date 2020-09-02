@@ -1,6 +1,6 @@
-#######
-# Compile stage
-################
+############################
+# STEP 1 build executable binary
+############################
 #
 # Start from the latest golang base image
 FROM golang:latest as builder
@@ -29,14 +29,13 @@ COPY . .
 
 # Build the Go app
 # RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o telebotserver .
-RUN CGO_ENABLED=0 GOOS=linux \
-    go build --ldflags "-s -w" -a -installsuffix cgo \
-    -v -o telebotserver .
 #      && go test $(go list ./... | grep -v /vendor/) -cover
+RUN CGO_ENABLED=0 GOOS=linux go build --ldflags "-s -w" -a -installsuffix cgo -v ./src/customer/main
+RUN mv main telebotserver
 
-#######
-# Final stage
-#############
+############################
+# STEP 2 build a small image
+############################
 #
 FROM alpine:latest  
 

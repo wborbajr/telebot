@@ -1,3 +1,7 @@
+############################
+# STEP 1 build executable binary
+############################
+#
 # Start from the latest golang base image
 FROM golang:latest as builder
 
@@ -5,6 +9,11 @@ FROM golang:latest as builder
 LABEL maintainer="Waldir Borba Junior <wborbajr@gmail.com>"
 
 # ENV GO111MODULE=on
+
+# Add docker-compose-wait tool -------------------
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+
+RUN chmod +x /wait
 
 # Set the Current Working Directory inside the container
 WORKDIR /telebot
@@ -20,15 +29,15 @@ COPY . .
 
 # Build the Go app
 # RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o telebotserver .
-RUN CGO_ENABLED=0 GOOS=linux \
-    go build --ldflags "-s -w" -a -installsuffix cgo \
-    -v -o telebotserver .
 #      && go test $(go list ./... | grep -v /vendor/) -cover
+RUN CGO_ENABLED=0 GOOS=linux go build --ldflags "-s -w" -a -installsuffix cgo -v ./src/customer/main
+RUN mv main telebotserver
 
-########
-######## Start a new stage from scratch #######
-##############
- FROM alpine:latest  
+############################
+# STEP 2 build a small image
+############################
+#
+FROM alpine:latest  
 
 # Add non root user and certs
 RUN apk --no-cache add ca-certificates  
@@ -37,15 +46,11 @@ WORKDIR /telebot
 
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /telebot/telebotserver ./
-
-# Add docker-compose-wait tool -------------------
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
-
-RUN chmod +x /wait
+COPY --from=builder /wait /wait
 
 # Expose port 1406 to the outside world
-ENV PORT=1406
-EXPOSE 1406
+# ENV PORT=1406
+# EXPOSE 6014 1406
 
 # Command to run the executable
 CMD ["./telebotserver"]
