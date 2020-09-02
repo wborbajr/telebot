@@ -5,7 +5,7 @@ services:
     image: telebot:latest
     build:
       context: .
-      dockerfile: ./docker/Dockerfile.dev
+      dockerfile: ./docker/Dockerfile.dev.sec
     container_name: ct_TB_app
     hostname: telebot
     restart: always
@@ -13,12 +13,13 @@ services:
     #   - mongodb
     ports:
       - 6014:1406
-    command: sh -c "/wait && /telebot/telebotserver"
+    command: sh -c "/wait && /telebot/main"
     environment:
       MONGO_HOST: mongodb #${MONGO_HOST}
       MONGO_DB_NAME: telebot
       TELEGRAM_TOKEN: xxxxxxx
-      GIN_MODE: debug
+      # GIN_MODE: release ## for production
+      GIN_MODE: debug ## for development
       APP_PORT: 1406
 
       # WAIT_HOSTS: postgres:5432, mysql:3306, mongo:27017
