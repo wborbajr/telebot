@@ -50,8 +50,8 @@ COPY --from=builder /telebot/telebotserver ./
 COPY --from=builder /wait /wait
 
 # Expose port 1406 to the outside world
-ENV PORT=1406
-EXPOSE 1406
+# ENV PORT=1406
+# EXPOSE 6014 1406
 
 # Command to run the executable
 CMD ["./telebotserver"]
