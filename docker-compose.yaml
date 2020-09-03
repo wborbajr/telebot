@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 
 services:
   telebot:
@@ -8,12 +8,12 @@ services:
       dockerfile: ./docker/Dockerfile.dev.sec
     container_name: ct_TB_app
     hostname: telebot
-    restart: always
+    restart: unless-stopped
     # links:
     #   - mongodb
     ports:
       - 6014:1406
-    command: sh -c "/wait && /telebot/main"
+    command: sh -c "/wait && /telebot/telebotserver"
     environment:
       MONGO_HOST: mongodb #${MONGO_HOST}
       MONGO_DB_NAME: telebot
@@ -27,18 +27,19 @@ services:
       WAIT_HOSTS_TIMEOUT: 300
       WAIT_SLEEP_INTERVAL: 30
       WAIT_HOST_CONNECT_TIMEOUT: 30
-
     depends_on:
       - mongodb
       - postgres
       - mongoclient
       - redis
+    networks:
+      - infra
 
   mongodb:
     image: mongo:latest
     container_name: ct_TB_mongodb
     hostname: mongo
-    restart: always
+    restart: unless-stopped
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
@@ -50,16 +51,18 @@ services:
       # - 27018:27018
       # - 27019:27019
     command: mongod --logpath=/dev/null
+    networks:
+      - infra
 
   postgres:
     image: postgres:latest
     container_name: ct_TB_postgres
     hostname: postgres-db
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 123mudar
-      POSTGRES_DB: postgres
+      POSTGRES_DB: customer-db
       POSTGRES_INITDB_ARGS: '--encoding=UTF-8'
       PGDATA: /var/lib/postgresql/data
     ports:
@@ -69,17 +72,21 @@ services:
       - $PWD/infra/pgsql/pglog:/var/log/postgresql:rw
       # - pgconf:/etc/postgresql
       # - data:/var/lib/postgresql/data
+    networks:
+      - infra
 
   redis:
     image: redis:alpine
     container_name: ct_TB_redis
     hostname: redis
-    restart: always
+    restart: unless-stopped
     # command: redis-server --requirepass sOmE_sEcUrE_pAsS
     ports:
       - 7963:6379
     volumes:
       - $PWD/infra/redis/data:/data:rw
+    networks:
+      - infra
 
   mongoclient:
     image: mongoclient/mongoclient
@@ -92,20 +99,28 @@ services:
       - 2020:3000
     # links:
     #   - mongodb
+    networks:
+      - infra
 
   pgadmin4:
     image: dpage/pgadmin4
     container_name: ct_TB_pgadmin4
-    restart: always
+    restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: root
-      PGADMIN_DEFAULT_PASSWORD: root
-      PGADMIN_LISTEN_PORT: 80
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      # PGADMIN_LISTEN_PORT: 80
     ports:
-      - '9090:80'
+      - '${PGADMIN_PORT:-5050}:80'
     volumes:
       - $PWD/infra/pgadmin/pgadmin:/var/lib/pgadmin:rw
     depends_on:
       - postgres
     links:
       - postgres
+    networks:
+      - infra
+
+networks:
+  infra:
+    driver: bridge
