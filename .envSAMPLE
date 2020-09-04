@@ -1,0 +1,17 @@
+## for development
+GIN_MODE=debug
+
+## for production
+# GIN_MODE=release
+
+# PGAdmin
+PGADMIN_DEFAULT_EMAIL=
+PGADMIN_DEFAULT_PASSWORD=
+
+# Host port
+PGADMIN_PORT=
+MONGOCLI_PORT=
+REDIS_PORT=
+POSTGRES_PORT=
+MONGODB_PORT=
+TELEBOT_PORT=

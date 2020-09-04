@@ -58,6 +58,12 @@ docker-compose up -d
 docker-compose down
 ```
 
+### Logs
+
+```bash
+docker-compose logs -f
+```
+
 ### Cleanup <none> images
 
 ```bash

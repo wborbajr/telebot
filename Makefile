@@ -23,4 +23,7 @@ deploy: build setup
 run:
 	docker run registry.heroku.com/$(APP_NAME)/$(PROCESS_TYPE)
 
+help:
+	@printf "\033[32m\xE2\x9c\x93 Run the smallest and secured golang docker image based on scratch\n\033[0m"
+
 clean:
