@@ -1,3 +1,5 @@
+![CI](https://github.com/wborbajr/telebot/workflows/CI/badge.svg)
+
 ![TeleBot](./docs/images/telebot.jpg)
 
 # telebot
