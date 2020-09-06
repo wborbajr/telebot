@@ -39,10 +39,11 @@ services:
       - mongoclient
       - redis
     # logging:
-    #   driver: fluentd
+    #   driver: 'fluentd'
     #   options:
-    #     tag: telebot
-    #     fluentd-address: localhost:24224
+    #     fluentd-address: 'logger'
+    #     mode: 'non-blocking'
+    #     max-buffer-size: '2m'
     logging:
       driver: 'json-file' # none ## for non logging
       options:
@@ -69,8 +70,6 @@ services:
       options:
         max-size: '10m'
         max-file: '5'
-    # depends_on:
-    #   - logger
     networks:
       - infra
 

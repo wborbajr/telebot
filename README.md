@@ -111,3 +111,35 @@ https://blog.berkgokden.com/continuous-integration-practices-with-docker-part-2-
 https://dev.to/nodepractices/docker-best-practices-with-node-js-4ln4
 
 https://github.com/goldbergyoni/nodebestpractices
+
+## iTerm2 shortcut
+
+Expand split
+```
+Cmd + Shift + Enter
+```
+
+Split Horizontal
+```
+Cmd + Shift + D 
+```
+
+Split Vertical
+```
+Cmd + Shift + D 
+```
+
+Switch between  splits
+```
+Cmd + [ or Cmd + ]
+```
+
+Save layout
+```
+Cmd + Shift + S
+```
+
+Restore layout
+```
+Cmd + Shift + R
+```
