@@ -1,0 +1,161 @@
+version: "3.5"
+
+services:
+  logger:
+    image: fluentd:latest
+    container_name: ct_TB_fluentd
+    hostname: fluentd
+    ports:
+      - 24224:24224
+      - 24224:24224/udp
+    networks:
+      - infra
+
+  telebot:
+    image: telebot:latest
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.dev.sec
+    container_name: ct_TB_app
+    hostname: telebot
+    restart: unless-stopped
+    ports:
+      - 1406:1406
+    command: sh -c "/wait && /telebot/telebotserver"
+    environment:
+      MONGO_HOST: mongodb
+      MONGO_DB_NAME: telebot
+      TELEGRAM_TOKEN: xxxxxxx
+      GIN_MODE: release
+      APP_PORT: 1406
+
+      WAIT_HOSTS: mongodb:27017, postgres:5432, redis:6379, logger:24224
+      WAIT_HOSTS_TIMEOUT: 300
+      WAIT_SLEEP_INTERVAL: 30
+      WAIT_HOST_CONNECT_TIMEOUT: 30
+    depends_on:
+      - mongodb
+      - postgres
+      - mongoclient
+      - redis
+    # logging:
+    #   driver: 'fluentd'
+    #   options:
+    #     fluentd-address: 'logger'
+    #     mode: 'non-blocking'
+    #     max-buffer-size: '2m'
+    logging:
+      driver: "json-file" # none ## for non logging
+      options:
+        max-size: "10m"
+        max-file: "5"
+    networks:
+      - infra
+
+  mongodb:
+    image: mongo:latest
+    container_name: ct_TB_mongodb
+    hostname: mongo
+    restart: unless-stopped
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - $PWD/infra/mongo/db:/data/db:rw
+    ports:
+      - 27017:27017
+    command: mongod --logpath=/dev/null
+    logging:
+      driver: "json-file" # none ## for non logging
+      options:
+        max-size: "10m"
+        max-file: "5"
+    networks:
+      - infra
+
+  postgres:
+    image: postgres:latest
+    container_name: ct_TB_postgres
+    hostname: postgres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123mudar
+      POSTGRES_DB: customer-db
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - $PWD/infra/pgsql/dbdata:/var/lib/postgresql/data:rw
+      - $PWD/infra/pgsql/pglog:/var/log/postgresql:rw
+      # - pgconf:/etc/postgresql
+      # - data:/var/lib/postgresql/data
+    logging:
+      driver: "json-file" # none ## for non logging
+      options:
+        max-size: "10m"
+        max-file: "5"
+    networks:
+      - infra
+
+  redis:
+    image: redis:alpine
+    container_name: ct_TB_redis
+    hostname: redis
+    restart: unless-stopped
+    # command: redis-server --requirepass sOmE_sEcUrE_pAsS
+    ports:
+      - 6379:6379
+    volumes:
+      - $PWD/infra/redis/data:/data:rw
+    logging:
+      driver: "json-file" # none ## for non logging
+      options:
+        max-size: "10m"
+        max-file: "5"
+    networks:
+      - infra
+
+  mongoclient:
+    image: mongoclient/mongoclient
+    container_name: ct_TB_mongoclient
+    hostname: mongoclient
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    ports:
+      - 9091:9091
+    logging:
+      driver: "json-file" # none ## for non logging
+      options:
+        max-size: "10m"
+        max-file: "5"
+    networks:
+      - infra
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: ct_TB_pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 9092
+    ports:
+      - 9092:9092"
+    volumes:
+      - $PWD/infra/pgadmin/pgadmin:/var/lib/pgadmin:rw
+    depends_on:
+      - postgres
+    logging:
+      driver: "json-file" # none ## for non logging
+      options:
+        max-size: "10m"
+        max-file: "5"
+    networks:
+      - infra
+
+networks:
+  infra:
+    driver: bridge
