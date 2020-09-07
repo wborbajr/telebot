@@ -141,9 +141,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin
       PGADMIN_DEFAULT_PASSWORD: admin
-      PGADMIN_LISTEN_PORT: 9092
     ports:
-      - 9092:9092"
+      - 9092:9092
     volumes:
       - $PWD/infra/pgadmin/pgadmin:/var/lib/pgadmin:rw
     depends_on:
