@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.5"
 
 services:
   logger:
@@ -45,10 +45,10 @@ services:
     #     mode: 'non-blocking'
     #     max-buffer-size: '2m'
     logging:
-      driver: 'json-file' # none ## for non logging
+      driver: "json-file" # none ## for non logging
       options:
-        max-size: '10m'
-        max-file: '5'
+        max-size: "10m"
+        max-file: "5"
     networks:
       - infra
 
@@ -66,10 +66,10 @@ services:
       - ${MONGODB_PORT}:27017
     command: mongod --logpath=/dev/null
     logging:
-      driver: 'json-file' # none ## for non logging
+      driver: "json-file" # none ## for non logging
       options:
-        max-size: '10m'
-        max-file: '5'
+        max-size: "10m"
+        max-file: "5"
     networks:
       - infra
 
@@ -82,7 +82,7 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 123mudar
       POSTGRES_DB: customer-db
-      POSTGRES_INITDB_ARGS: '--encoding=UTF-8'
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
       PGDATA: /var/lib/postgresql/data
     ports:
       - ${POSTGRES_PORT}:5432
@@ -92,10 +92,10 @@ services:
       # - pgconf:/etc/postgresql
       # - data:/var/lib/postgresql/data
     logging:
-      driver: 'json-file' # none ## for non logging
+      driver: "json-file" # none ## for non logging
       options:
-        max-size: '10m'
-        max-file: '5'
+        max-size: "10m"
+        max-file: "5"
     networks:
       - infra
 
@@ -110,10 +110,10 @@ services:
     volumes:
       - $PWD/infra/redis/data:/data:rw
     logging:
-      driver: 'json-file' # none ## for non logging
+      driver: "json-file" # none ## for non logging
       options:
-        max-size: '10m'
-        max-file: '5'
+        max-size: "10m"
+        max-file: "5"
     networks:
       - infra
 
@@ -127,10 +127,10 @@ services:
     ports:
       - ${MONGOCLI_PORT}:9091
     logging:
-      driver: 'json-file' # none ## for non logging
+      driver: "json-file" # none ## for non logging
       options:
-        max-size: '10m'
-        max-file: '5'
+        max-size: "10m"
+        max-file: "5"
     networks:
       - infra
 
@@ -141,18 +141,17 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_LISTEN_PORT: 9092
     ports:
-      - '${PGADMIN_PORT:-5050}:9092'
+      - "${PGADMIN_PORT:-5050}:9092"
     volumes:
       - $PWD/infra/pgadmin/pgadmin:/var/lib/pgadmin:rw
     depends_on:
       - postgres
     logging:
-      driver: 'json-file' # none ## for non logging
+      driver: "json-file" # none ## for non logging
       options:
-        max-size: '10m'
-        max-file: '5'
+        max-size: "10m"
+        max-file: "5"
     networks:
       - infra
 

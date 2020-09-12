@@ -102,6 +102,10 @@ https://medium.com/@mycoralhealth/code-your-own-blockchain-in-less-than-200-line
 
 https://www.cloudreach.com/en/resources/blog/cts-build-golang-dockerfiles/
 
+### Reference Docker
+
+https://medium.com/@chemidy/create-the-smallest-and-secured-golang-docker-image-based-on-scratch-4752223b7324
+
 ### Best Practice
 
 https://www.reddit.com/r/golang/comments/fah0v8/best_practice_to_dockerize_golang_113/
