@@ -1,5 +1,7 @@
 ![CI](https://github.com/wborbajr/telebot/workflows/CI/badge.svg)
 
+![License](https://img.shields.io/github/license/wborbajr/telebot?style=plastic)
+
 ![TeleBot](./docs/images/telebot.jpg)
 
 # telebot
